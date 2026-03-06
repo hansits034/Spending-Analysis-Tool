@@ -8,6 +8,7 @@
 1. Download Zip
 2. Extract
 3. Make new notepad
+   
 ```
 Set WshShell = CreateObject("WScript.Shell")
 
@@ -24,6 +25,8 @@ WScript.Sleep 2500
 ' 4. Buka browser otomatis ke alamat lokal
 WshShell.Run "msedge.exe --app=http://localhost:3000", 1, False
 ```
-Save As, Desktop Directory, Rename "MyExpenses.vbs", Save as Type "All Files", Right Click, Show More Option, Send to, Dekstop (Create Shortcut), Properties (Custom Icon).
-4. Left Click, Wait 3 Secs.
-5. Click Shutdown Button on the Top Right Corner.
+
+4. Save As, Desktop Directory, Rename "MyExpenses.vbs", Save as Type "All Files"
+5. Right Click, Show More Option, Send to, Dekstop (Create Shortcut), Properties (Custom Icon).
+6. Left Click, Wait 3 Secs.
+7. Click Shutdown Button on the Top Right Corner.
