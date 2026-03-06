@@ -99,12 +99,28 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/60 flex flex-col h-[330px]">
+                    <h2 class="text-base font-bold mb-0 flex items-center gap-2 text-slate-800 shrink-0">
+                        <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-500"></i> Kategori
+                    </h2>
+                    
+                    <div class="flex flex-col items-center justify-center mt-2">
+                        <div class="relative w-full max-w-[160px] aspect-square">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div id="pie-legend" class="mt-4 flex-1 overflow-y-auto custom-scrollbar pr-1 grid grid-cols-2 gap-x-2 gap-y-1 content-start">
+                        </div>
+                </div>
+
             </div>
 
-            <div class="lg:col-span-8 space-y-4">
+            <div class="lg:col-span-8 space-y-4 flex flex-col">
                 
-                <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/60 flex flex-col">
-                    <div class="flex justify-between items-center mb-3">
+                <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/60 flex flex-col shrink-0">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-3">
                         <h2 class="text-base font-bold flex items-center gap-2 text-slate-800">
                             <i data-lucide="trending-up" class="w-4 h-4 text-indigo-500"></i> Tren Pengeluaran
                         </h2>
@@ -125,57 +141,47 @@
                             </select>
                         </div>
                     </div>
-                    <div class="relative w-full flex-1 min-h-[370px]">
+                    <div class="relative w-full min-h-[345px]">
                         <canvas id="lineChart"></canvas>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    
-                    <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/60 flex flex-col items-center">
-                        <h2 class="text-base font-bold mb-2 flex items-center gap-2 text-slate-800 w-full text-left">
-                            <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-500"></i> Kategori
+                <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/60 flex flex-col h-[330px]">
+                    <div class="flex justify-between items-center mb-4 shrink-0">
+                        <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                            <i data-lucide="list" class="w-4 h-4 text-indigo-500"></i> Riwayat Transaksi
                         </h2>
-                        <div class="relative w-full max-w-[160px] aspect-square flex justify-center items-center mt-2">
-                            <canvas id="pieChart"></canvas>
+                        <span id="tx-count" class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">0 Data</span>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row gap-2 mb-4 shrink-0">
+                        <div class="relative flex-1">
+                            <i data-lucide="search" class="absolute left-2.5 top-1/2 -translate-y-1/2 w-3 h-3 text-slate-400"></i>
+                            <input type="text" id="search-history" onkeyup="renderHistory()" placeholder="Cari keterangan atau kategori..." class="w-full pl-7 py-1.5 px-3 bg-slate-50 border border-slate-200 rounded-lg outline-none text-xs focus:ring-2 focus:ring-indigo-500/20 transition-all">
+                        </div>
+                        
+                        <div class="flex gap-2 w-full md:w-auto">
+                            <input type="date" id="date-history" onchange="renderHistory()" class="flex-1 md:w-32 py-1.5 px-2 bg-slate-50 border border-slate-200 rounded-lg outline-none text-[11px] text-slate-600 focus:ring-2 focus:ring-indigo-500/20 transition-all">
+                            
+                            <select id="sort-history" onchange="renderHistory()" class="flex-1 md:w-32 py-1.5 px-2 bg-slate-50 border border-slate-200 rounded-lg outline-none text-[11px] font-semibold text-slate-600 focus:ring-2 focus:ring-indigo-500/20 transition-all">
+                                <option value="date-desc" selected>Terbaru</option>
+                                <option value="date-asc">Terlama</option>
+                                <option value="price-desc">Tertinggi</option>
+                                <option value="price-asc">Terendah</option>
+                            </select>
+
+                            <button onclick="resetHistoryFilters()" class="py-1.5 px-2 bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-lg transition-colors shrink-0" title="Reset">
+                                <i data-lucide="x" class="w-3 h-3"></i>
+                            </button>
                         </div>
                     </div>
                     
-                    <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/60 flex flex-col h-[260px]">
-                        <div class="flex justify-between items-center mb-3">
-                            <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-                                <i data-lucide="list" class="w-4 h-4 text-indigo-500"></i> Riwayat
-                            </h2>
-                            <span id="tx-count" class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">0 Data</span>
-                        </div>
-                        
-                        <div class="flex flex-col gap-1.5 mb-3">
-                            <div class="relative w-full">
-                                <i data-lucide="search" class="absolute left-2.5 top-1/2 -translate-y-1/2 w-3 h-3 text-slate-400"></i>
-                                <input type="text" id="search-history" onkeyup="renderHistory()" placeholder="Cari..." class="w-full pl-7 py-1.5 px-2 bg-slate-50 border border-slate-200 rounded-lg outline-none text-xs focus:ring-2 focus:ring-indigo-500/20 transition-all">
-                            </div>
-                            
-                            <div class="flex gap-1.5">
-                                <input type="date" id="date-history" onchange="renderHistory()" class="flex-1 py-1.5 px-2 bg-slate-50 border border-slate-200 rounded-lg outline-none text-[11px] text-slate-600 focus:ring-2 focus:ring-indigo-500/20 transition-all">
-                                
-                                <select id="sort-history" onchange="renderHistory()" class="flex-1 py-1.5 px-2 bg-slate-50 border border-slate-200 rounded-lg outline-none text-[11px] font-semibold text-slate-600 focus:ring-2 focus:ring-indigo-500/20 transition-all">
-                                    <option value="date-desc" selected>Terbaru</option>
-                                    <option value="date-asc">Terlama</option>
-                                    <option value="price-desc">Tertinggi</option>
-                                    <option value="price-asc">Terendah</option>
-                                </select>
-
-                                <button onclick="resetHistoryFilters()" class="py-1.5 px-2 bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-lg transition-colors shrink-0" title="Reset">
-                                    <i data-lucide="x" class="w-3 h-3"></i>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div id="history-list" class="space-y-1.5 flex-1 overflow-y-auto custom-scrollbar pr-1">
+                    <div class="flex-1 overflow-y-auto custom-scrollbar pr-2 min-h-0">
+                        <div id="history-list" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2 content-start">
                             </div>
                     </div>
-
                 </div>
+
             </div>
         </div>
     </div>
@@ -231,7 +237,6 @@
 
         const formatRp = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
 
-        // --- FUNGSI MODAL BARU ---
         window.openBaselineModal = function() {
             const modal = document.getElementById('baseline-modal');
             const content = document.getElementById('baseline-modal-content');
@@ -244,7 +249,7 @@
                 modal.classList.add('opacity-100');
                 content.classList.remove('scale-95');
                 content.classList.add('scale-100');
-            }, 10); // Jeda kecil agar animasi jalan
+            }, 10); 
         }
 
         window.closeBaselineModal = function() {
@@ -258,7 +263,7 @@
             
             setTimeout(() => {
                 modal.classList.add('hidden');
-            }, 300); // Tunggu animasi selesai baru dihilangkan dari layar
+            }, 300); 
         }
 
         window.saveBaseline = function() {
@@ -275,7 +280,6 @@
                 }
             }
         }
-        // ------------------------
 
         async function loadData() {
             try {
@@ -401,9 +405,9 @@
             
             if (displayData.length === 0) {
                 historyDiv.innerHTML = `
-                    <div class="text-center py-4">
-                        <i data-lucide="search-x" class="w-6 h-6 text-slate-300 mx-auto mb-1"></i>
-                        <p class="text-slate-400 font-medium text-xs">Tidak ada data.</p>
+                    <div class="col-span-full text-center py-8">
+                        <i data-lucide="search-x" class="w-8 h-8 text-slate-300 mx-auto mb-2"></i>
+                        <p class="text-slate-400 font-medium text-xs">Tidak ada data ditemukan.</p>
                     </div>`;
             } else {
                 const historyHTML = displayData.map(exp => {
@@ -412,18 +416,18 @@
                     const dateStr = dateObj.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
                     
                     return `
-                    <div class="group flex justify-between items-center p-2.5 hover:bg-slate-50 border border-slate-100 rounded-xl transition-all gap-2">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-1.5 h-6 rounded-full" style="background-color: ${color}"></div>
-                            <div>
-                                <p class="font-bold text-slate-800 text-xs leading-tight">${exp.description}</p>
-                                <p class="text-[9px] font-semibold text-slate-500 mt-0.5">${dateStr} • <span style="color: ${color}">${exp.category}</span></p>
+                    <div class="group flex justify-between items-center p-3 hover:bg-slate-50 border border-slate-100 rounded-xl transition-all gap-2 h-14">
+                        <div class="flex items-center gap-2.5 w-full overflow-hidden">
+                            <div class="w-1.5 h-full min-h-[32px] rounded-full shrink-0" style="background-color: ${color}"></div>
+                            <div class="truncate">
+                                <p class="font-bold text-slate-800 text-[13px] leading-tight truncate">${exp.description}</p>
+                                <p class="text-[10px] font-semibold text-slate-500 mt-0.5 truncate">${dateStr} • <span style="color: ${color}">${exp.category}</span></p>
                             </div>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <p class="font-bold text-slate-800 text-xs">-${formatRp(exp.amount)}</p>
-                            <button onclick="deleteExpense(${exp.id})" class="text-slate-300 hover:text-rose-500 opacity-100 md:opacity-0 md:group-hover:opacity-100">
-                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <p class="font-bold text-slate-800 text-[13px]">-${formatRp(exp.amount)}</p>
+                            <button onclick="deleteExpense(${exp.id})" class="text-slate-300 hover:text-rose-500 opacity-100 md:opacity-0 md:group-hover:opacity-100 shrink-0">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
                             </button>
                         </div>
                     </div>`;
@@ -464,10 +468,11 @@
             }
             lucide.createIcons(); 
 
-            updateCharts(filteredExpenses, avg);
+            updateCharts(filteredExpenses, avg, total);
         }
 
-        function updateCharts(filteredExpenses, currentAvg) {
+        // --- RENDER PIE CHART DAN LEGEND CUSTOM ---
+        function updateCharts(filteredExpenses, currentAvg, totalSum) {
             const daily = {};
             filteredExpenses.forEach(e => daily[e.date] = (daily[e.date] || 0) + e.amount);
             
@@ -482,9 +487,31 @@
 
             const catData = {};
             filteredExpenses.forEach(e => catData[e.category] = (catData[e.category] || 0) + e.amount);
-            const labelsPie = Object.keys(catData);
-            const dataPie = labelsPie.map(c => catData[c]);
+            
+            // Urutkan data Pie Chart dari pengeluaran terbesar agar legendanya lebih masuk akal
+            const sortedCatEntries = Object.entries(catData).sort((a, b) => b[1] - a[1]);
+            const labelsPie = sortedCatEntries.map(e => e[0]);
+            const dataPie = sortedCatEntries.map(e => e[1]);
             const bgPie = labelsPie.map(c => categoryColors[c] || '#64748b');
+
+            // Render Legend Custom di Bawah Diagram Donut
+            const legendDiv = document.getElementById('pie-legend');
+            if (totalSum === 0) {
+                legendDiv.innerHTML = '<p class="text-xs text-slate-400 text-center col-span-2">Belum ada data kategori</p>';
+            } else {
+                legendDiv.innerHTML = sortedCatEntries.map(([cat, val]) => {
+                    const pct = ((val / totalSum) * 100).toFixed(1);
+                    const color = categoryColors[cat] || '#64748b';
+                    return `
+                    <div class="flex items-center justify-between bg-slate-50 px-2 py-1.5 rounded-lg border border-slate-100">
+                        <div class="flex items-center gap-1.5 overflow-hidden">
+                            <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${color}"></span>
+                            <span class="text-[10px] font-semibold text-slate-600 truncate">${cat}</span>
+                        </div>
+                        <span class="text-[10px] font-bold text-slate-800 ml-2">${pct}%</span>
+                    </div>`;
+                }).join('');
+            }
 
             Chart.defaults.font.family = "'Inter', sans-serif";
             Chart.defaults.color = '#64748b';
@@ -497,7 +524,7 @@
                     labels: labelsLine, 
                     datasets: [
                         { 
-                            label: `Batas (${formatRp(baselineLimit)})`, 
+                            label: ` Batas (${formatRp(baselineLimit)})`, 
                             data: baselineData, 
                             borderColor: '#ef4444', 
                             borderWidth: 1.5,
@@ -507,7 +534,7 @@
                             tension: 0
                         },
                         { 
-                            label: `Rata-rata (${formatRp(currentAvg)})`, 
+                            label: ` Rata-rata (${formatRp(currentAvg)})`, 
                             data: avgData, 
                             borderColor: '#f59e0b', 
                             borderWidth: 1.5,
@@ -517,7 +544,7 @@
                             tension: 0
                         },
                         { 
-                            label: 'Pengeluaran Harian', 
+                            label: ' Pengeluaran', 
                             data: dataLine, 
                             borderColor: '#6366f1', 
                             backgroundColor: 'rgba(99, 102, 241, 0.1)',
@@ -559,9 +586,9 @@
                 options: { 
                     responsive: true,
                     maintainAspectRatio: false, 
-                    cutout: '65%', 
+                    cutout: '70%', // Bolongan donut dilebarkan lagi karena legendnya udah di luar
                     plugins: { 
-                        legend: { display: false } 
+                        legend: { display: false } // Matikan legend bawaan chart.js
                     }
                 }
             });
